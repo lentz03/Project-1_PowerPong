@@ -1,17 +1,20 @@
-//Players
+//Players 1 & 2
 var player1 = $("#paddleA")
 var player2 = $("#paddleB")
+
 //Controls
 var KEY = { UP: 38, DOWN: 40, W: 87, S: 83 };
 var pressedKeys = [];
+
 // Score needed to win game
 var winScore = 5;
+
 // Each players starting score
 var score1 = 0
 var score2 = 0
 
 $(function() {
-  // Store in buffer keyboard events
+  // Store in for keyboard de knowledge
   $(document).keydown(function(e) {
     pressedKeys[e.which] = true;
   });
@@ -19,7 +22,7 @@ $(function() {
     pressedKeys[e.which] = false;
   });
 
-  // Set main loop frame rate
+  // Set main loop frame rate (60 fps the best)
   setInterval(gameLoop, 1000 / 60);
 });
 
