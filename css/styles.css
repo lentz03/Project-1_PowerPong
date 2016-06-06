@@ -1,0 +1,25 @@
+#court {
+  background: #000000;
+  width: 800px;
+  height: 500px;
+  position: relative;
+  margin: 50px auto;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 2px solid #ffffff
+}
+
+.paddle {
+  background: #d5d3d3;
+  position: absolute;
+  left: 50px;
+  top: 115px;
+  width: 15px;
+  height: 70px;
+  border-radius: 5px;
+  border: 1px solid #000000
+}
+
+#paddleB {
+  left: 733px
+}
