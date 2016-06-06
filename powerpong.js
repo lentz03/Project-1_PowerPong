@@ -13,8 +13,8 @@ var winScore = 5;
 var score1 = 0
 var score2 = 0
 
+// Store in for keyboard de knowledge
 $(function() {
-  // Store in for keyboard de knowledge
   $(document).keydown(function(e) {
     pressedKeys[e.which] = true;
   });
@@ -39,10 +39,13 @@ function movePaddles() {
   if (pressedKeys[KEY.W]) {
     // Move the paddle A up
     var top = parseInt($("#paddleA").css("top"));
-    if (top >= -parseInt($("#paddleA").css("height"))/2) {
+    if (top - 6 >= 0) {
       $("#paddleA").css("top", top - paddleSpeed);
     }
   }
+
+
+// Control keys
 
   if (pressedKeys[KEY.S]) {
     // Move the paddle A down
@@ -50,13 +53,22 @@ function movePaddles() {
       $("#paddleA").css("top", top + paddleSpeed);
     }
 
+
+
+
+
+
   if (pressedKeys[KEY.UP]) {
     // Move the paddle B up
     var top = parseInt($("#paddleB").css("top"));
-    if (top >= -parseInt($("#paddleB").css("height"))/2) {
+    if (top - 6 >= 0) {
       $("#paddleB").css("top", top - paddleSpeed);
     }
   }
+
+
+
+
 
   if (pressedKeys[KEY.DOWN]) {
     // Move the paddle B down
