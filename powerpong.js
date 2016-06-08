@@ -83,13 +83,13 @@ $(document).ready(function(){
       lastContact = 'paddleA';
     }
 
+    // paddleB collision
     var paddleBPosition = $paddleB.position();
     var paddleBTop   = paddleBPosition.top;
     var paddleBBot   = paddleBPosition.top + paddleHeight;
     var paddleBLeft  = paddleBPosition.left;
     var paddleBRight = paddleBPosition.left + paddleWidth;
 
-    // paddleB collision
     if (ballLeft <= paddleBRight && ballRight >= paddleBLeft && ballTop <= paddleBBot && ballBot >= paddleBTop && lastContact !== 'paddleB') {
       horizontalMove = -horizontalMove;
       lastContact = 'paddleB';
