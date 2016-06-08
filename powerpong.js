@@ -1,78 +1,170 @@
-//Players 1 & 2
-var player1 = $("#paddleA")
-var player2 = $("#paddleB")
+$(document).ready(function(){
+  // Game Loop
+  var gameloop = null;
 
-//Controls
-var KEY = { UP: 38, DOWN: 40, W: 87, S: 83 };
-var pressedKeys = [];
+  //Players 1 & 2
+  var $paddleA = $("#paddleA")
+  var $paddleB = $("#paddleB")
 
-// Score needed to win game
-var winScore = 5;
+  //Ball
+  var $ball          = $("#ball");
+  var ballHeight     = 20;
+  var ballWidth      = 20
+  var verticalMove   = 5;
+  var horizontalMove = 5;
+  var lastContact    = '';
 
-// Each players starting score
-var score1 = 0
-var score2 = 0
+  // Score needed to win game
+  var winScore = 5;
 
-// Store in for keyboard de knowledge
-$(function() {
-  $(document).keydown(function(e) {
-    pressedKeys[e.which] = true;
-  });
-  $(document).keyup(function(e) {
-    pressedKeys[e.which] = false;
-  });
+  // Each players starting score
+  var score1 = 0
+  var score2 = 0
 
-  // Set main loop frame rate (60 fps the best)
-  setInterval(gameLoop, 1000 / 60);
-});
+  // Paddle settings
+  var paddleSpeed  = 4;
+  var paddleHeight = 70;
+  var paddleWidth  = 15;
 
-// Main loop of the game
-function gameLoop() {
-  movePaddles();
-}
+  //Controls
+  var KEY = { UP: 38, DOWN: 40, W: 87, S: 83 };
+  var pressedKeys = {
+    "38": false,
+    "40": false,
+    "87": false,
+    "83": false
+  };
 
-// Control movement of paddles based on keyboard events
-function movePaddles() {
-  var paddleSpeed = 5;
+  // System Settings
+  var xMin = 0;
+  var xMax = 800;
+  var yMin = 0;
+  var yMax = 500;
 
-  // Check keyboard events
-  if (pressedKeys[KEY.W]) {
+  //Ball positioning
+  var moveBall = function(){
+    // boundary collision
+    var position  = $ball.position();
+
+    var ballTop   = position.top;
+    var ballBot   = position.top + ballHeight;
+    var ballLeft  = position.left;
+    var ballRight = position.left + ballWidth;
+
+    if (ballTop <= yMin) {
+      verticalMove = -verticalMove;
+      lastContact = "yMin";
+    }
+
+    if (ballBot >= yMax ) {
+      verticalMove = -verticalMove;
+      lastContact = "yMax";
+    }
+
+    if (ballLeft <= xMin) {
+      horizontalMove = -horizontalMove;
+      lastContact = "xMin";
+    }
+
+    if (ballRight >= xMax) {
+      horizontalMove = -horizontalMove;
+      lastContact = "xMax";
+    }
+
+    // paddleA collision
+    var paddleAPosition = $paddleA.position();
+    var paddleATop   = paddleAPosition.top;
+    var paddleABot   = paddleAPosition.top + paddleHeight;
+    var paddleALeft  = paddleAPosition.left;
+    var paddleARight = paddleAPosition.left + paddleWidth;
+
+    if (ballLeft <= paddleARight && ballRight >= paddleALeft && ballTop <= paddleABot && ballBot >= paddleATop && lastContact !== 'paddleA') {
+      horizontalMove = -horizontalMove;
+      lastContact = 'paddleA';
+    }
+
+    var paddleBPosition = $paddleB.position();
+    var paddleBTop   = paddleBPosition.top;
+    var paddleBBot   = paddleBPosition.top + paddleHeight;
+    var paddleBLeft  = paddleBPosition.left;
+    var paddleBRight = paddleBPosition.left + paddleWidth;
+
+    // paddleB collision
+    if (ballLeft <= paddleBRight && ballRight >= paddleBLeft && ballTop <= paddleBBot && ballBot >= paddleBTop && lastContact !== 'paddleB') {
+      horizontalMove = -horizontalMove;
+      lastContact = 'paddleB';
+    }
+
+    $ball.css({
+      top: position.top + verticalMove,
+      left: position.left + horizontalMove
+    });
+  };
+
+  // Control movement of paddles based on keyboard events
+  var movePaddles =  function() {
+    // Check keyboard events
+
     // Move the paddle A up
-    var top = parseInt($("#paddleA").css("top"));
-    if (top - 6 >= 0) {
-      $("#paddleA").css("top", top - paddleSpeed);
+    if (pressedKeys[KEY.W]) {
+      var position = $paddleA.position();
+      var top = position.top;
+      if (top >= 0) {
+        $paddleA.css("top", top - paddleSpeed);
+      }
     }
-  }
 
-
-// Control keys
-
-  if (pressedKeys[KEY.S]) {
     // Move the paddle A down
-    var top = parseInt($("#paddleA").css("top"));
-      $("#paddleA").css("top", top + paddleSpeed);
+    if (pressedKeys[KEY.S]) {
+      var position = $paddleA.position();
+      var top = position.top;
+      var bot = top + paddleHeight;
+      if (bot <= 500) {
+        $paddleA.css("top", top + paddleSpeed);
+      }
     }
 
+    // Move the paddle A up
+    if (pressedKeys[KEY.UP]) {
+      var position = $paddleB.position();
+      window.debug = position
+      var top = position.top;
+      if (top >= 0) {
+        $paddleB.css("top", top - paddleSpeed);
+      }
+    }
 
-
-
-
-
-  if (pressedKeys[KEY.UP]) {
-    // Move the paddle B up
-    var top = parseInt($("#paddleB").css("top"));
-    if (top - 6 >= 0) {
-      $("#paddleB").css("top", top - paddleSpeed);
+    // Move the paddle A down
+    if (pressedKeys[KEY.DOWN]) {
+      var position = $paddleB.position();
+      var top = position.top;
+      var bot = top + paddleHeight;
+      if (bot <= 500) {
+        $paddleB.css("top", top + paddleSpeed);
+      }
     }
   }
 
+  // Store in for keyboard de knowledge
+  var bindKeys = function() {
+    $(document).on('keydown', function(e) {
+      pressedKeys[e.keyCode] = true;
+    });
 
+    $(document).on('keyup', function(e) {
+      pressedKeys[e.keyCode] = false;
+    });
+  };
 
+  // Main loop of the game
+  var startGame = function () {
+    bindKeys();
+    // Set main loop frame rate (60 fps the best)
+    gameloop = setInterval(function () {
+      moveBall();
+      movePaddles();
+    }, 1000 / 60);
+  };
 
-
-  if (pressedKeys[KEY.DOWN]) {
-    // Move the paddle B down
-    var top = parseInt($("#paddleB").css("top"));
-        $("#paddleB").css("top", top + paddleSpeed);
-    }
-}
+  startGame();
+});
