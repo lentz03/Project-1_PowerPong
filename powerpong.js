@@ -77,10 +77,20 @@ $(document).ready(function(){
       mySound.play();
       score2++;
       $('.score2').text(score2);
-      //(score2 === winScore ){
-      // #endgame
-     // }
     }
+
+   /* if (score1 === winScore ){
+      $('#endgame').show();
+      bindStart() = false;
+      $('.player1wins').show();
+      $('.player2wins').hide();
+      } else { if( score2 === winScore) {
+        $('#endgame').show();
+      bindStart() = false;
+      $('.player2wins').show();
+      $('.player1wins').hide();
+      }
+    }*/
 
     if (ballRight >= xMax) {
       horizontalMove = -horizontalMove;
@@ -178,7 +188,7 @@ $(document).ready(function(){
   };
 
   var bindResetBtn = function () {
-      $('#resetBtn').on('click', function () {
+      $('button').on('click', function () {
         clearInterval(gameloop);
         $('#ball').stop().remove();
         $('#endgame').hide();
