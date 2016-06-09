@@ -27,12 +27,13 @@ $(document).ready(function(){
   var paddleWidth  = 15;
 
   //Controls
-  var KEY = { UP: 38, DOWN: 40, W: 87, S: 83 };
+  var KEY = { UP: 38, DOWN: 40, W: 87, S: 83, Enter: 13};
   var pressedKeys = {
     "38": false,
     "40": false,
     "87": false,
-    "83": false
+    "83": false,
+    "13": false
   };
 
   // System Settings
@@ -75,6 +76,9 @@ $(document).ready(function(){
       mySound.play();
       score2++;
       $('.score2').text(score2);
+      //(score2 === winScore ){
+        //score2 = 0;
+      //}
     }
 
     if (ballRight >= xMax) {
@@ -172,6 +176,22 @@ $(document).ready(function(){
     });
   };
 
+  var bindStart = function () {
+      $(document).off('keypress').one('keypress', function(e){
+        if (e.keyCode === 13) {
+          startGame();
+        }
+      });
+    };
+
+var init = function () {
+  bindStart();
+  bindKeys();
+  };
+
+
+
+
   // Main loop of the game
   var startGame = function () {
     bindKeys();
@@ -182,5 +202,5 @@ $(document).ready(function(){
     }, 1000 / 60);
   };
 
-  startGame();
+  init();
 });
