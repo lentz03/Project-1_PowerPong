@@ -41,6 +41,14 @@ $(document).ready(function(){
   var yMin = 0;
   var yMax = 500;
 
+  // Sound effects
+  var mySound = new buzz.sound( "css/sfx.wav",
+    { preload: true, loop: false });
+  var beep = new buzz.sound( "css/paddleA.wav",
+    { preload: true, loop: false });
+  var bop = new buzz.sound( "css/paddleB.wav",
+    { preload: true, loop: false });
+
   //Ball positioning
   var moveBall = function(){
     // boundary collision
@@ -64,11 +72,17 @@ $(document).ready(function(){
     if (ballLeft <= xMin) {
       horizontalMove = -horizontalMove;
       lastContact = "xMin";
+      mySound.play();
+      score2++;
+      $('.score2').text(score2);
     }
 
     if (ballRight >= xMax) {
       horizontalMove = -horizontalMove;
       lastContact = "xMax";
+      mySound.play();
+      score1++;
+      $('.score1').text(score1);
     }
 
     // paddleA collision
@@ -81,6 +95,7 @@ $(document).ready(function(){
     if (ballLeft <= paddleARight && ballRight >= paddleALeft && ballTop <= paddleABot && ballBot >= paddleATop && lastContact !== 'paddleA') {
       horizontalMove = -horizontalMove;
       lastContact = 'paddleA';
+      beep.play();
     }
 
     // paddleB collision
@@ -93,6 +108,7 @@ $(document).ready(function(){
     if (ballLeft <= paddleBRight && ballRight >= paddleBLeft && ballTop <= paddleBBot && ballBot >= paddleBTop && lastContact !== 'paddleB') {
       horizontalMove = -horizontalMove;
       lastContact = 'paddleB';
+      bop.play();
     }
 
     $ball.css({
