@@ -49,7 +49,8 @@ $(document).ready(function(){
     { preload: true, loop: false });
   var bop = new buzz.sound( "css/paddleB.wav",
     { preload: true, loop: false });
-
+  var showme = new buzz.sound( "css/smwyg.mp3",
+    { preload: true, loop: false });
   //Ball positioning
   var moveBall = function(){
     // boundary collision
@@ -179,6 +180,7 @@ $(document).ready(function(){
   var bindStart = function () {
       $(document).off('keypress').one('keypress', function(e){
         if (e.keyCode === 13) {
+          showme.play();
           startGame();
         }
       });
