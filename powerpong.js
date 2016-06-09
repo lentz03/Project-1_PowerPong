@@ -78,8 +78,8 @@ $(document).ready(function(){
       score2++;
       $('.score2').text(score2);
       //(score2 === winScore ){
-        //score2 = 0;
-      //}
+      // #endgame
+     // }
     }
 
     if (ballRight >= xMax) {
@@ -177,6 +177,16 @@ $(document).ready(function(){
     });
   };
 
+  var bindResetBtn = function () {
+      $('#resetBtn').on('click', function () {
+        clearInterval(gameloop);
+        $('#ball').stop().remove();
+        $('#endgame').hide();
+        bindStart();
+      })
+    }
+
+// Press Enter to start game
   var bindStart = function () {
       $(document).off('keypress').one('keypress', function(e){
         if (e.keyCode === 13) {
@@ -186,13 +196,14 @@ $(document).ready(function(){
       });
     };
 
+
+
+// Initialize these functions
 var init = function () {
   bindStart();
   bindKeys();
+  bindResetBtn();
   };
-
-
-
 
   // Main loop of the game
   var startGame = function () {
