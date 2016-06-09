@@ -1,3 +1,8 @@
+@font-face {
+    font-family: pixelfont;
+    src: url(pixelfont.TTF);
+}
+
 #container {
   width: 812px;
   height: 512px;
@@ -18,12 +23,15 @@
   box-sizing: border-box;
   background: #d9ed7a;
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   left: 290px;
   top: 140px;
-  border-radius: 10px;
-  border: 2px solid #FF0000
+  border-radius: 20px;
+  border: 2px solid #FF0000;
+  background: url('./cromulon.png');
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
 }
 
 .paddle {
@@ -47,6 +55,11 @@ h1 {
   color: #00FF00;
 }
 
+h2{
+  text-align:center;
+  color: #ABD5EC;
+}
+
 p {
   text-align: center;
   color: red;
@@ -64,4 +77,20 @@ p {
   background-size: 20rem 20rem;
   background-position: center 0;
   animation: bg 10s linear infinite;
+}
+
+.score {
+  position: absolute;
+  display: inline-block;
+  color: white;
+  font-family: pixelfont;
+  font-size: 50px;
+}
+
+.score1 {
+  left: 330px;
+}
+
+.score2 {
+  left: 450px;
 }

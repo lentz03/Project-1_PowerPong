@@ -8,18 +8,73 @@ $(document).ready(function(){
 
   //Ball
   var $ball          = $("#ball");
-  var ballHeight     = 20;
-  var ballWidth      = 20
-  var verticalMove   = 5;
-  var horizontalMove = 5;
+  var ballHeight     = 40;
+  var ballWidth      = 40
+  var verticalMove   = 5; //vertical  speed
+  var horizontalMove = 5; //horizontal speed
   var lastContact    = '';
-
+  var ballSize       = 40;
   // Score needed to win game
   var winScore = 5;
 
   // Each players starting score
   var score1 = 0
   var score2 = 0
+
+  //Spawn point for the ball //make into a function and call
+  var x =369;
+  var y =200;
+
+  var originalX = x
+  // Counter
+  y += verticalMove;
+  x -= horizontalMove;
+
+
+  if (x < 0) {
+      score2 += 1;
+      x = originalX;
+      y = ballWidth;
+      vertSpeed = originalVS;
+      horizSpeed = originalHS;
+  }
+  if (x > 400) {
+      score1 += 1;
+      x = originalX;
+      y = bY;
+      vertSpeed = originalVS;
+      horizSpeed = originalHS;
+  }
+
+  if (y < ballSize * 2) {
+      vertSpeed *= -1;
+  }
+  if (y > 400 -ballSize * 2) {
+      vertSpeed *= -1;
+  }
+
+  var winScreen = function () {
+    if (score1 > score2) {
+            fill(255, 0, 0);
+            text(player1 + " won!!!", 50, 200);
+            text(comment, 10, 250);
+        }
+        if (score2 > score1) {
+            fill(255, 0, 0);
+            text(player2 + " won!!!", 50, 200);
+            text(comment, 10, 250);
+        }
+      };
+
+      // Winning!
+          if (score1 > winScore - 1) {
+              winScreen();
+              score2 = 0;
+          }
+          if (score2 > winScore - 1) {
+              winScreen();
+              score1 = 0;
+          };
 
   // Paddle settings
   var paddleSpeed  = 4;
