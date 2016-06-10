@@ -42,7 +42,7 @@ $(document).ready(function(){
   var yMin = 0;
   var yMax = 500;
 
-  // Sound effects
+  // Sound effects and background music
   var mySound = new buzz.sound( "css/sfx.wav",
     { preload: true, loop: false });
   var beep = new buzz.sound( "css/paddleA.wav",
@@ -51,6 +51,9 @@ $(document).ready(function(){
     { preload: true, loop: false });
   var showme = new buzz.sound( "css/smwyg.mp3",
     { preload: true, loop: false });
+  var getschwifty = new buzz.sound( "css/get.mp3",
+    { preload: true, loop: false });
+
   //Ball positioning
   var moveBall = function(){
     // boundary collision
@@ -86,14 +89,16 @@ $(document).ready(function(){
       score1++;
       $('.score1').text(score1);
     }
-
+    // Winning Logic
     if (score1 === winScore ){
       $('#endgame').show();
+      getschwifty.play();
       $('.player1wins').show();
       $('.player2wins').hide();
       clearInterval(gameloop);
     } else if ( score2 === winScore) {
       $('#endgame').show();
+      getschwifty.play();
       $('.player2wins').show();
       $('.player1wins').hide();
       clearInterval(gameloop);

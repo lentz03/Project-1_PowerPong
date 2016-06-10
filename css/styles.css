@@ -104,3 +104,17 @@ p {
   height: 100%;
   display: none;
 }
+
+.player1wins {
+  font-family: pixelfont;
+  font-size: 50px;
+  text-align: center;
+  color: white;
+}
+
+.player2wins {
+  font-family: pixelfont;
+  font-size: 50px;
+  text-align: center;
+  color: white;
+}
