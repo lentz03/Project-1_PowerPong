@@ -51,16 +51,20 @@
 h1 {
   text-align:center;
   color: #00FF00;
+  font-family: pixelfont;
 }
 
 h2{
   text-align:center;
   color: #ABD5EC;
+  font-family: pixelfont;
 }
 
 p {
   text-align: center;
   color: red;
+  font-family: pixelfont;
+  font-size: 20px;
 }
 
 @keyframes bg {
@@ -100,4 +104,3 @@ p {
   height: 100%;
   display: none;
 }
-

@@ -79,25 +79,24 @@ $(document).ready(function(){
       $('.score2').text(score2);
     }
 
-   /* if (score1 === winScore ){
-      $('#endgame').show();
-      bindStart() = false;
-      $('.player1wins').show();
-      $('.player2wins').hide();
-      } else { if( score2 === winScore) {
-        $('#endgame').show();
-      bindStart() = false;
-      $('.player2wins').show();
-      $('.player1wins').hide();
-      }
-    }*/
-
     if (ballRight >= xMax) {
       horizontalMove = -horizontalMove;
       lastContact = "xMax";
       mySound.play();
       score1++;
       $('.score1').text(score1);
+    }
+
+    if (score1 === winScore ){
+      $('#endgame').show();
+      $('.player1wins').show();
+      $('.player2wins').hide();
+      clearInterval(gameloop);
+    } else if ( score2 === winScore) {
+      $('#endgame').show();
+      $('.player2wins').show();
+      $('.player1wins').hide();
+      clearInterval(gameloop);
     }
 
     // paddleA collision
@@ -187,37 +186,44 @@ $(document).ready(function(){
     });
   };
 
-  var bindResetBtn = function () {
-      $('button').on('click', function () {
-        clearInterval(gameloop);
-        $('#ball').stop().remove();
-        $('#endgame').hide();
-        bindStart();
-      })
-    }
-
-// Press Enter to start game
+  // Press Enter to start game
   var bindStart = function () {
-      $(document).off('keypress').one('keypress', function(e){
-        if (e.keyCode === 13) {
-          showme.play();
-          startGame();
-        }
+    $(document).off('keypress').one('keypress', function(e){
+      if (e.keyCode === 13) {
+        showme.play();
+        startGame();
+      }
+    });
+  };
+
+  var bindResetBtn = function () {
+    $('button').on('click', function () {
+      $('#endgame').hide();
+      score1 = 0;
+      $('.score1').text(score1);
+      score2 = 0;
+      $('.score2').text(score2);
+
+      horizontalMove = Math.abs(horizontalMove);
+      verticalMove   = Math.abs(verticalMove);
+      $ball.css({
+        top: '140px',
+        left: '290px'
       });
-    };
 
+      bindStart();
+    })
+  };
 
-
-// Initialize these functions
-var init = function () {
-  bindStart();
-  bindKeys();
-  bindResetBtn();
+  // Initialize these functions
+  var init = function () {
+    bindKeys();
+    bindResetBtn();
+    bindStart();
   };
 
   // Main loop of the game
   var startGame = function () {
-    bindKeys();
     // Set main loop frame rate (60 fps the best)
     gameloop = setInterval(function () {
       moveBall();
